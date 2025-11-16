@@ -3,7 +3,7 @@ from pydantic.v1 import BaseSettings
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = "sqlite:///./tasks.db"
+    database_url: str = "sqlite:///./pokemon.db"
 
     # Security
     secret_key: str = "1234"

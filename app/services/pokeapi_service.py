@@ -2,8 +2,9 @@ import httpx
 from typing import Optional, List, Dict
 from fastapi import HTTPException
 import logging
+from datetime import datetime 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("pokedex_api")
 
 
 class PokeAPIService:
@@ -25,9 +26,17 @@ class PokeAPIService:
         url = f"{self.BASE_URL}/pokemon/{identifier}"
 
         try:
+            start = datetime.utcnow()
             logger.info("PokeAPI GET %s", url)
+
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(url)
+            duration = (datetime.utcnow() - start).total_seconds()
+            logger.info(
+                "PokeAPI response %s status=%s duration=%.3fs",
+                url, response.status_code, duration,
+            )
+
         except httpx.TimeoutException:
             logger.error("Timeout llamando a %s", url)
             raise HTTPException(status_code=504, detail="Timeout llamando a PokeAPI")
@@ -99,9 +108,17 @@ class PokeAPIService:
         params = {"limit": limit, "offset": offset}
 
         try:
+            start = datetime.utcnow()
             logger.info("PokeAPI GET %s params=%s", url, params)
+
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(url, params=params)
+
+            duration = (datetime.utcnow() - start).total_seconds()
+            logger.info(
+                "PokeAPI response %s status=%s duration=%.3fs",
+                url, response.status_code, duration,
+            )
         except httpx.TimeoutException:
             logger.error("Timeout llamando a %s", url)
             raise HTTPException(status_code=504, detail="Timeout llamando a PokeAPI")
@@ -147,9 +164,19 @@ class PokeAPIService:
         url = f"{self.BASE_URL}/type/{type_name}"
 
         try:
+            start = datetime.utcnow()
             logger.info("PokeAPI GET %s", url)
+
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(url)
+            
+            duration = (datetime.utcnow() - start).total_seconds()
+            logger.info(
+                "PokeAPI response %s status=%s duration=%.3fs",
+                url, response.status_code, duration,
+            )
+
+
         except httpx.TimeoutException:
             logger.error("Timeout llamando a %s", url)
             raise HTTPException(status_code=504, detail="Timeout llamando a PokeAPI")

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Optional
+import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer
@@ -12,6 +13,9 @@ from app.config import settings
 from app.database import get_session
 from app.models import User, UserCreate, UserRead
 from app.rate_limiter import limiter
+
+#logger
+logger = logging.getLogger("pokedex_api")
 
 #  Configuración de seguridad
 
@@ -87,7 +91,7 @@ async def register(
     request: Request,
     user: UserCreate,
     session: Session = Depends(get_session),
-):
+    ):
     # Comprobar que username o email no existan ya
     existing = session.exec(
         select(User).where(
@@ -96,6 +100,9 @@ async def register(
     ).first()
 
     if existing:
+        logger.warning(
+        f"Register conflict: username='{user.username}', email='{user.email}'"
+    )
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Usuario o email ya registrados",
@@ -124,6 +131,7 @@ async def login(
     user = get_user_by_username(session, credentials.username)
 
     if not user or not verify_password(credentials.password, user.hashed_password):
+        logger.warning(f"Auth failed for username='{credentials.username}'")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Credenciales inválidas",

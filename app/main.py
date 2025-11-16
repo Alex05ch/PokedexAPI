@@ -1,7 +1,8 @@
 import logging
 from contextlib import asynccontextmanager
+from datetime import datetime
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -21,10 +22,18 @@ from app.pokedex import router as pokedex_router
 from app.teams import router as teams_router
 
 
-# -------------------------------------------------
+
 # Logging
-# -------------------------------------------------
-logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("pokedex_api.log", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
+
 logger = logging.getLogger("pokedex_api")
 
 
@@ -64,9 +73,27 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
     max_age=3600,
 )
-# -------------------------------------------------
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = datetime.utcnow()
+
+    # Log de la petición entrante
+    logger.info(f"Request: {request.method} {request.url.path}")
+
+    response = await call_next(request)
+
+    duration = (datetime.utcnow() - start_time).total_seconds()
+
+    # Log de la respuesta
+    logger.info(
+        f"Response: {response.status_code} | Duration: {duration:.3f}s"
+    )
+
+    return response
+
 # Routers
-# -------------------------------------------------
+
 app.include_router(auth_router)
 app.include_router(pokemon_router)
 app.include_router(pokedex_router)

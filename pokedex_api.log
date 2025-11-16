@@ -1,0 +1,110 @@
+2025-11-17 00:08:53,504 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:08:53,504 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 00:08:53,505 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:08:53,505 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 00:08:53,505 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:08:53,506 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 00:08:53,506 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:08:53,506 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 00:08:53,506 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:08:53,507 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:08:53,507 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 00:11:10,396 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 00:11:10,399 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:11:10,409 - sqlalchemy.engine.Engine - INFO - SELECT user.id, user.username, user.email, user.hashed_password, user.created_at, user.is_active 
+FROM user 
+WHERE user.username = ? OR user.email = ?
+2025-11-17 00:11:10,409 - sqlalchemy.engine.Engine - INFO - [generated in 0.00047s] ('alex3', 'alex3@gmail.com')
+2025-11-17 00:11:10,661 - sqlalchemy.engine.Engine - INFO - INSERT INTO user (username, email, hashed_password, created_at, is_active) VALUES (?, ?, ?, ?, ?)
+2025-11-17 00:11:10,661 - sqlalchemy.engine.Engine - INFO - [generated in 0.00039s] ('alex3', 'alex3@gmail.com', '$2b$12$G6fYY6JluwhJYTm6pyHEbeeiGgdvQwmvaKRDTNO5XXRc5MyQCdI2e', '2025-11-16 23:11:10.660157', 1)
+2025-11-17 00:11:10,662 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:11:10,667 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:11:10,669 - sqlalchemy.engine.Engine - INFO - SELECT user.id, user.username, user.email, user.hashed_password, user.created_at, user.is_active 
+FROM user 
+WHERE user.id = ?
+2025-11-17 00:11:10,669 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] (4,)
+2025-11-17 00:11:10,670 - pokedex_api - INFO - Response: 201 | Duration: 0.274s
+2025-11-17 00:11:10,671 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-11-17 00:14:04,738 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:14:04,738 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 00:14:04,738 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,739 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("user")
+2025-11-17 00:14:04,739 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,739 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 00:14:04,739 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,740 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("pokedexentry")
+2025-11-17 00:14:04,740 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,740 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 00:14:04,740 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,741 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("team")
+2025-11-17 00:14:04,741 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,741 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 00:14:04,741 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,741 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("teammember")
+2025-11-17 00:14:04,742 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:14:04,742 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR(50) NOT NULL, 
+	email VARCHAR NOT NULL, 
+	hashed_password VARCHAR NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	is_active BOOLEAN NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2025-11-17 00:14:04,743 - sqlalchemy.engine.Engine - INFO - [no key 0.00040s] ()
+2025-11-17 00:14:04,749 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_email ON user (email)
+2025-11-17 00:14:04,749 - sqlalchemy.engine.Engine - INFO - [no key 0.00026s] ()
+2025-11-17 00:14:04,754 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_username ON user (username)
+2025-11-17 00:14:04,754 - sqlalchemy.engine.Engine - INFO - [no key 0.00024s] ()
+2025-11-17 00:14:04,758 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE pokedexentry (
+	id INTEGER NOT NULL, 
+	owner_id INTEGER NOT NULL, 
+	pokemon_id INTEGER NOT NULL, 
+	pokemon_name VARCHAR NOT NULL, 
+	pokemon_sprite VARCHAR NOT NULL, 
+	is_captured BOOLEAN NOT NULL, 
+	capture_date DATETIME, 
+	nickname VARCHAR(50), 
+	notes VARCHAR(500), 
+	favorite BOOLEAN NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(owner_id) REFERENCES user (id)
+)
+
+
+2025-11-17 00:14:04,759 - sqlalchemy.engine.Engine - INFO - [no key 0.00048s] ()
+2025-11-17 00:14:04,763 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_pokedexentry_pokemon_id ON pokedexentry (pokemon_id)
+2025-11-17 00:14:04,763 - sqlalchemy.engine.Engine - INFO - [no key 0.00020s] ()
+2025-11-17 00:14:04,767 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE team (
+	id INTEGER NOT NULL, 
+	trainer_id INTEGER NOT NULL, 
+	name VARCHAR(100) NOT NULL, 
+	description VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(trainer_id) REFERENCES user (id)
+)
+
+
+2025-11-17 00:14:04,768 - sqlalchemy.engine.Engine - INFO - [no key 0.00042s] ()
+2025-11-17 00:14:04,772 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE teammember (
+	id INTEGER NOT NULL, 
+	team_id INTEGER NOT NULL, 
+	pokedex_entry_id INTEGER NOT NULL, 
+	position INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(team_id) REFERENCES team (id), 
+	FOREIGN KEY(pokedex_entry_id) REFERENCES pokedexentry (id)
+)
+
+
+2025-11-17 00:14:04,773 - sqlalchemy.engine.Engine - INFO - [no key 0.00041s] ()
+2025-11-17 00:14:04,776 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:14:04,777 - pokedex_api - INFO - Base de datos inicializada
