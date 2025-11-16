@@ -23,6 +23,12 @@ router = APIRouter(
     tags=["pokedex"],
 )
 
+#Version 2 router
+router_v2 = APIRouter(
+    prefix="/api/v2/pokedex",
+    tags=["pokedex-v2"],   # o "pokedex"
+)
+
 pokeapi_service = PokeAPIService()
 
 
@@ -276,4 +282,24 @@ async def get_pokedex_stats(
         "completion_percentage": round(completion_percentage, 1),
         "most_common_type": most_common_type,
         "capture_streak_days": streak,
+    }
+
+@router_v2.get("/stats")
+def get_pokedex_stats_v2(
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    """
+    GET /api/v2/pokedex/stats
+
+    Versión 2: mismas stats que v1 pero con mejoras (ej. metadatos extra).
+    """
+
+    stats = get_pokedex_stats(current_user=current_user, session=session)
+
+    # Si stats es un modelo, conviértelo a dict: stats = stats.dict()
+    return {
+        "version": "v2",
+        "generated_at": datetime.utcnow().isoformat(),
+        "data": stats,
     }

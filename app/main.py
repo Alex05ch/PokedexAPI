@@ -4,6 +4,8 @@ from datetime import datetime
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 
 
@@ -18,7 +20,7 @@ from app.rate_limiter import limiter
 # Routers de la API
 from app.auth import router as auth_router
 from app.pokemon import router as pokemon_router
-from app.pokedex import router as pokedex_router
+from app.pokedex import router as pokedex_router_v1, router_v2 as pokedex_router_v2
 from app.teams import router as teams_router
 
 
@@ -55,11 +57,9 @@ app = FastAPI(
 
 # SlowAPI necesita esto
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# -------------------------------------------------
+
 # CORS 
-# -------------------------------------------------
 
 app.add_middleware(
     CORSMiddleware,
@@ -92,11 +92,37 @@ async def log_requests(request: Request, call_next):
 
     return response
 
+# Manejo de errores de validación
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc: RequestValidationError):
+    logger.warning(
+        "Error de validación en %s %s -> %s",
+        request.method,
+        request.url.path,
+        exc.errors(),
+    )
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()},
+    )
+
+#Manejo de Rate Limit Exceeded
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request, exc: RateLimitExceeded):
+    logger.warning(
+        "Rate limit exceeded para %s %s desde %s",
+        request.method,
+        request.url.path,
+        request.client.host if request.client else "unknown",
+    )
+    return _rate_limit_exceeded_handler(request, exc)
+
 # Routers
 
 app.include_router(auth_router)
 app.include_router(pokemon_router)
-app.include_router(pokedex_router)
+app.include_router(pokedex_router_v1)  
+app.include_router(pokedex_router_v2)
 app.include_router(teams_router)
 
 

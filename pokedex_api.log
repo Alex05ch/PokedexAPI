@@ -108,3 +108,51 @@ CREATE TABLE teammember (
 2025-11-17 00:14:04,773 - sqlalchemy.engine.Engine - INFO - [no key 0.00041s] ()
 2025-11-17 00:14:04,776 - sqlalchemy.engine.Engine - INFO - COMMIT
 2025-11-17 00:14:04,777 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 00:29:54,613 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:29:54,614 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 00:29:54,614 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:29:54,614 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 00:29:54,615 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:29:54,615 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 00:29:54,615 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:29:54,615 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 00:29:54,616 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:29:54,616 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:29:54,616 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 00:29:57,511 - pokedex_api - INFO - Request: GET /
+2025-11-17 00:29:57,512 - pokedex_api - INFO - Response: 404 | Duration: 0.001s
+2025-11-17 00:30:41,975 - pokedex_api - INFO - Request: GET /docs
+2025-11-17 00:30:41,976 - pokedex_api - INFO - Response: 200 | Duration: 0.001s
+2025-11-17 00:30:42,064 - pokedex_api - INFO - Request: GET /openapi.json
+2025-11-17 00:30:42,104 - pokedex_api - INFO - Response: 200 | Duration: 0.040s
+2025-11-17 00:31:08,902 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 00:31:08,905 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:31:08,916 - sqlalchemy.engine.Engine - INFO - SELECT user.id, user.username, user.email, user.hashed_password, user.created_at, user.is_active 
+FROM user 
+WHERE user.username = ? OR user.email = ?
+2025-11-17 00:31:08,916 - sqlalchemy.engine.Engine - INFO - [generated in 0.00046s] ('alex3', 'alex3@mail.com')
+2025-11-17 00:31:09,177 - sqlalchemy.engine.Engine - INFO - INSERT INTO user (username, email, hashed_password, created_at, is_active) VALUES (?, ?, ?, ?, ?)
+2025-11-17 00:31:09,177 - sqlalchemy.engine.Engine - INFO - [generated in 0.00053s] ('alex3', 'alex3@mail.com', '$2b$12$BQRqR.7bfdaj0.K0EpdFLuka9pjmaZSzonLmVVdep8VAo1CxN2wyO', '2025-11-16 23:31:09.175338', 1)
+2025-11-17 00:31:09,188 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:31:09,193 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:31:09,195 - sqlalchemy.engine.Engine - INFO - SELECT user.id, user.username, user.email, user.hashed_password, user.created_at, user.is_active 
+FROM user 
+WHERE user.id = ?
+2025-11-17 00:31:09,195 - sqlalchemy.engine.Engine - INFO - [generated in 0.00039s] (1,)
+2025-11-17 00:31:09,196 - pokedex_api - INFO - Response: 201 | Duration: 0.294s
+2025-11-17 00:31:09,197 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-11-17 00:43:50,940 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 00:43:50,940 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 00:43:50,941 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:43:50,941 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 00:43:50,941 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:43:50,942 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 00:43:50,942 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:43:50,942 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 00:43:50,942 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 00:43:50,943 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 00:43:50,943 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 00:43:58,434 - pokedex_api - INFO - Request: GET /docs
+2025-11-17 00:43:58,435 - pokedex_api - INFO - Response: 200 | Duration: 0.001s
+2025-11-17 00:43:58,501 - pokedex_api - INFO - Request: GET /openapi.json
+2025-11-17 00:43:58,530 - pokedex_api - INFO - Response: 200 | Duration: 0.028s
