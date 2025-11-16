@@ -11,11 +11,9 @@ from sqlmodel import Session, select
 from app.config import settings
 from app.database import get_session
 from app.models import User, UserCreate, UserRead
-from app.main import limiter
+from app.rate_limiter import limiter
 
-# ==========================
 #  Configuración de seguridad
-# ==========================
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
@@ -69,9 +67,7 @@ def get_user_by_username(session: Session, username: str) -> Optional[User]:
     return session.exec(statement).first()
 
 
-# ============
 #  Schemas
-# ============
 
 class LoginRequest(BaseModel):
     username: str
@@ -83,9 +79,7 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"
 
 
-# ===============================
 #  Endpoints de autenticación
-# ===============================
 
 @router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 @limiter.limit("5/hour")

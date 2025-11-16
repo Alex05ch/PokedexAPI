@@ -26,16 +26,14 @@ router = APIRouter(
 pokeapi_service = PokeAPIService()
 
 
-# ============================
 #  LISTAR ENTRADAS POKÉDEX
-# ============================
 
 @router.get(
     "",
     response_model=List[PokedexEntryRead],
 )
 @limiter.limit("100/minute")
-def list_pokedex_entries(
+async def list_pokedex_entries(
     request: Request, 
     captured: Optional[bool] = None,
     favorite: Optional[bool] = None,
@@ -80,16 +78,16 @@ def list_pokedex_entries(
     return entries
 
 
-# ============================
 #  CREAR ENTRADA POKÉDEX
-# ============================
 
 @router.post(
     "",
     response_model=PokedexEntryRead,
     status_code=status.HTTP_201_CREATED,
 )
+@limiter.limit("30/minute")
 async def create_pokedex_entry(
+    request: Request,
     payload: PokedexEntryCreate,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -125,15 +123,15 @@ async def create_pokedex_entry(
     return entry
 
 
-# ============================
 #  DETALLE DE UNA ENTRADA
-# ============================
 
 @router.get(
     "/{entry_id}",
     response_model=PokedexEntryRead,
 )
+@limiter.limit("60/minute")
 def get_pokedex_entry(
+    request: Request,
     entry_id: int,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -149,15 +147,15 @@ def get_pokedex_entry(
     return entry
 
 
-# ============================
 #  ACTUALIZAR ENTRADA (PATCH)
-# ============================
 
 @router.patch(
     "/{entry_id}",
     response_model=PokedexEntryRead,
 )
+@limiter.limit("30/minute")
 def update_pokedex_entry(
+    request: Request,
     entry_id: int,
     payload: PokedexEntryUpdate,
     current_user: User = Depends(get_current_user),
@@ -184,9 +182,9 @@ def update_pokedex_entry(
     return entry
 
 
-# ============================
+
 #  BORRAR ENTRADA
-# ============================
+
 
 @router.delete(
     "/{entry_id}",
@@ -194,6 +192,7 @@ def update_pokedex_entry(
 )
 def delete_pokedex_entry(
     entry_id: int,
+    request: Request,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):

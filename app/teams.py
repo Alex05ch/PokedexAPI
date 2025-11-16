@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlmodel import Session, select
 import io
 
@@ -11,6 +11,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
 from app.services.pokeapi_service import PokeAPIService
+from app.rate_limiter import limiter
 
 
 from app.auth import get_current_user
@@ -32,15 +33,17 @@ router = APIRouter(
 )
 
 
-# ============================
+
 #  LISTAR EQUIPOS
-# ============================
+
 
 @router.get(
     "",
     response_model=List[TeamRead],
 )
+@limiter.limit("60/minute")
 def list_teams(
+    request: Request,
     limit: int = 20,
     offset: int = 0,
     current_user: User = Depends(get_current_user),
@@ -62,16 +65,18 @@ def list_teams(
     return teams
 
 
-# ============================
+
 #  CREAR EQUIPO
-# ============================
+
 
 @router.post(
     "",
     response_model=TeamRead,
     status_code=status.HTTP_201_CREATED,
 )
+@limiter.limit("20/minute")
 def create_team(
+    request: Request,
     payload: TeamCreate,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -136,15 +141,17 @@ def create_team(
     return team
 
 
-# ============================
+
 #  DETALLE DE EQUIPO
-# ============================
+
 
 @router.get(
     "/{team_id}",
     response_model=TeamRead,
 )
+@limiter.limit("60/minute")
 def get_team(
+    request: Request,
     team_id: int,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -160,15 +167,16 @@ def get_team(
     return team
 
 
-# ----------------------------
 #  MIEMBROS DE UN EQUIPO
-# ----------------------------
+
 
 @router.get(
     "/{team_id}/members",
     response_model=List[PokedexEntryRead],
 )
+@limiter.limit("60/minute")
 def get_team_members(
+    request: Request,
     team_id: int,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -208,15 +216,17 @@ def get_team_members(
     return ordered_entries
 
 
-# ============================
+
 #  ACTUALIZAR EQUIPO
-# ============================
+
 
 @router.put(
     "/{team_id}",
     response_model=TeamRead,
 )
+@limiter.limit("20/minute")
 def update_team(
+    request: Request,
     team_id: int,
     payload: TeamUpdate,
     current_user: User = Depends(get_current_user),
@@ -284,15 +294,16 @@ def update_team(
     return team
 
 
-# ============================
+
 #  BORRAR EQUIPO
-# ============================
 
 @router.delete(
     "/{team_id}",
     status_code=status.HTTP_204_NO_CONTENT,
 )
+@limiter.limit("20/minute")
 def delete_team(
+    request: Request,
     team_id: int,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
@@ -323,7 +334,9 @@ def delete_team(
     response_class=StreamingResponse,
     summary="Exportar equipo en PDF",
 )
+@limiter.limit("60/minute")
 async def export_team(
+    request: Request,
     team_id: int,
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),

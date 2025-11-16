@@ -23,7 +23,7 @@ pokeapi_service = PokeAPIService()
 @router.get("/search")
 @limiter.limit("30/minute")
 async def search_pokemon_endpoint(
-    request: Request,           # 👈 añadido para SlowAPI
+    request: Request,           # añadido para SlowAPI
     name: str = Query(..., min_length=1, description="Nombre del Pokémon a buscar"),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
@@ -44,9 +44,11 @@ async def search_pokemon_endpoint(
 
 
 @router.get("/pokemon/{id_or_name}")
+@limiter.limit("60/minute")
 async def get_pokemon_detail_endpoint(
+    request: Request,           
     id_or_name: str,
-    current_user: User = Depends(get_current_user),  # requiere autenticación
+    current_user: User = Depends(get_current_user),  
 ):
     """
     GET /api/v1/pokemon/{id_or_name}
