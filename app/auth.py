@@ -11,6 +11,7 @@ from sqlmodel import Session, select
 from app.config import settings
 from app.database import get_session
 from app.models import User, UserCreate, UserRead
+from app.main import limiter
 
 # ==========================
 #  Configuración de seguridad
@@ -87,6 +88,7 @@ class TokenResponse(BaseModel):
 # ===============================
 
 @router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/hour")
 async def register(
     request: Request,
     user: UserCreate,
@@ -119,6 +121,7 @@ async def register(
 
 
 @router.post("/login", response_model=TokenResponse)
+@limiter.limit("10/minute")
 async def login(
     request: Request,
     credentials: LoginRequest,

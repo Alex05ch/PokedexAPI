@@ -1,8 +1,7 @@
-# app/pokedex.py
-
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
+from app.rate_limiter import limiter  
 from sqlmodel import Session, select
 from datetime import datetime, timedelta
 from collections import Counter
@@ -17,6 +16,7 @@ from app.models import (
     PokedexEntryUpdate,
 )
 from app.services.pokeapi_service import PokeAPIService
+from app.rate_limiter import limiter
 
 router = APIRouter(
     prefix="/api/v1/pokedex",
@@ -34,7 +34,9 @@ pokeapi_service = PokeAPIService()
     "",
     response_model=List[PokedexEntryRead],
 )
+@limiter.limit("100/minute")
 def list_pokedex_entries(
+    request: Request, 
     captured: Optional[bool] = None,
     favorite: Optional[bool] = None,
     search: Optional[str] = None,

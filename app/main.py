@@ -4,12 +4,15 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from slowapi import Limiter, _rate_limit_exceeded_handler
+
+
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
 from app.config import settings
 from app.database import create_db_and_tables
+from app.rate_limiter import limiter  
 
 # Routers de la API
 from app.auth import router as auth_router
@@ -23,11 +26,6 @@ from app.teams import router as teams_router
 # -------------------------------------------------
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("pokedex_api")
-
-# -------------------------------------------------
-# Rate limiting (SlowAPI)
-# -------------------------------------------------
-limiter = Limiter(key_func=get_remote_address)
 
 
 @asynccontextmanager
@@ -51,17 +49,21 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # -------------------------------------------------
-# CORS (como en el PDF)
+# CORS 
 # -------------------------------------------------
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,  # p.ej. ["http://localhost:3000", "http://localhost:5173", "https://tu-dominio.com"]
+    allow_origins=[
+    "http://localhost:3000", # React dev
+    "http://localhost:5173", # Vite dev
+    "https://tu-dominio.com" # Producción
+    ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
     max_age=3600,
 )
-
 # -------------------------------------------------
 # Routers
 # -------------------------------------------------
