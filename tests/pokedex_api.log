@@ -1,0 +1,121 @@
+2025-11-17 15:25:27,363 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:27,653 - pokedex_api - INFO - Response: 201 | Duration: 0.289s
+2025-11-17 15:25:27,656 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:25:27,663 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:27,921 - pokedex_api - INFO - Response: 201 | Duration: 0.258s
+2025-11-17 15:25:27,924 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:25:27,926 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:27,930 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:25:27,931 - pokedex_api - INFO - Response: 400 | Duration: 0.005s
+2025-11-17 15:25:27,933 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:25:27,938 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:27,941 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:25:27,943 - pokedex_api - INFO - Response: 400 | Duration: 0.006s
+2025-11-17 15:25:27,945 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:25:27,950 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:25:27,955 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:25:28,670 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:25:28,673 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=noexiste&password=mala'}]
+2025-11-17 15:25:29,014 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 15:25:29,015 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 15:25:29,016 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 15:25:29,020 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,025 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:25:29,026 - pokedex_api - INFO - Response: 400 | Duration: 0.006s
+2025-11-17 15:25:29,028 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:25:29,031 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:25:29,033 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:25:29,395 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,398 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,399 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,399 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:25:29,400 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:25:29,417 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,420 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,420 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,420 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:25:29,422 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:25:29,441 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,444 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,446 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,446 - pokedex_api - INFO - Response: 429 | Duration: 0.005s
+2025-11-17 15:25:29,448 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:25:29,465 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,469 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,470 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,470 - pokedex_api - INFO - Response: 429 | Duration: 0.005s
+2025-11-17 15:25:29,471 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:25:29,491 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,493 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,494 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,494 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:25:29,496 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:25:29,514 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:25:29,517 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:25:29,518 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:25:29,518 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:25:29,520 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:47,630 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:47,895 - pokedex_api - INFO - Response: 201 | Duration: 0.265s
+2025-11-17 15:40:47,897 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:40:47,901 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:48,135 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 15:40:48,136 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:40:48,138 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:48,140 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:48,141 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:40:48,142 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:48,146 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:48,148 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:48,148 - pokedex_api - INFO - Response: 400 | Duration: 0.002s
+2025-11-17 15:40:48,149 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:48,151 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:48,153 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:40:48,692 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:48,694 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=noexiste&password=mala'}]
+2025-11-17 15:40:48,996 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 15:40:48,997 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 15:40:48,998 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 15:40:49,002 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,005 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:49,005 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:40:49,007 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:49,009 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:49,011 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:40:49,315 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 15:40:49,553 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 15:40:49,555 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.240s
+2025-11-17 15:40:49,563 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 15:40:49,698 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 15:40:49,698 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.135s
+2025-11-17 15:40:49,699 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 15:40:49,703 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,706 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,706 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,706 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:40:49,707 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:49,730 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,731 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,732 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,732 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:40:49,733 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:49,757 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,759 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,760 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,761 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:40:49,763 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:49,792 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,794 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,795 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,795 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:40:49,796 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:49,819 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,821 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,822 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,822 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:40:49,825 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:49,849 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:49,851 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:49,851 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:49,852 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:40:49,853 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"

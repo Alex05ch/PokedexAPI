@@ -23,10 +23,10 @@ router = APIRouter(
     tags=["pokedex"],
 )
 
-#Version 2 router
+# Version 2 de la API 
 router_v2 = APIRouter(
     prefix="/api/v2/pokedex",
-    tags=["pokedex-v2"],   # o "pokedex"
+    tags=["pokedex-v2"],  
 )
 
 pokeapi_service = PokeAPIService()
@@ -107,7 +107,22 @@ async def create_pokedex_entry(
     - La API consulta PokeAPI para rellenar pokemon_name y pokemon_sprite.
     """
 
-    # Llamamos a PokeAPI para completar nombre y sprite
+    # Comprobar si ya existe este pokemon para este usuario
+    existing = session.exec(
+        select(PokedexEntry).where(
+            PokedexEntry.owner_id == current_user.id,
+            PokedexEntry.pokemon_id == payload.pokemon_id,
+        )
+    ).first()
+
+    if existing:
+        # El test espera 400 si intentas meter un duplicado
+        raise HTTPException(
+            status_code=400,
+            detail="Pokémon duplicado: ya está en tu Pokédex",
+        )
+
+    # Si no existe, llamamos a PokeAPI y creamos la entrada
     pokemon_data = await pokeapi_service.get_pokemon(payload.pokemon_id)
 
     entry = PokedexEntry(
@@ -127,6 +142,7 @@ async def create_pokedex_entry(
     session.refresh(entry)
 
     return entry
+
 
 
 #  DETALLE DE UNA ENTRADA
@@ -285,21 +301,27 @@ async def get_pokedex_stats(
     }
 
 @router_v2.get("/stats")
-def get_pokedex_stats_v2(
+async def get_pokedex_stats_v2(
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
-):
+) -> dict:
     """
     GET /api/v2/pokedex/stats
 
-    Versión 2: mismas stats que v1 pero con mejoras (ej. metadatos extra).
+    Versión 2:
+    - Reutiliza la lógica de v1
+    - Añade metadatos de versión y fecha de generación
     """
 
-    stats = get_pokedex_stats(current_user=current_user, session=session)
+    # Reutilizamos directamente la v1
+    base_stats = await get_pokedex_stats(
+        current_user=current_user,
+        session=session,
+    )
 
-    # Si stats es un modelo, conviértelo a dict: stats = stats.dict()
     return {
         "version": "v2",
         "generated_at": datetime.utcnow().isoformat(),
-        "data": stats,
+        "data": base_stats,
     }
+

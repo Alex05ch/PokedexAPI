@@ -156,3 +156,1086 @@ WHERE user.id = ?
 2025-11-17 00:43:58,435 - pokedex_api - INFO - Response: 200 | Duration: 0.001s
 2025-11-17 00:43:58,501 - pokedex_api - INFO - Request: GET /openapi.json
 2025-11-17 00:43:58,530 - pokedex_api - INFO - Response: 200 | Duration: 0.028s
+2025-11-17 15:17:40,073 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 15:17:40,074 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 15:17:40,074 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,076 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("user")
+2025-11-17 15:17:40,077 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,077 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 15:17:40,078 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,078 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("pokedexentry")
+2025-11-17 15:17:40,078 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,078 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 15:17:40,079 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,080 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("team")
+2025-11-17 15:17:40,081 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,081 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 15:17:40,082 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,083 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("teammember")
+2025-11-17 15:17:40,083 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:17:40,085 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR(50) NOT NULL, 
+	email VARCHAR NOT NULL, 
+	hashed_password VARCHAR NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	is_active BOOLEAN NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2025-11-17 15:17:40,086 - sqlalchemy.engine.Engine - INFO - [no key 0.00078s] ()
+2025-11-17 15:17:40,092 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_email ON user (email)
+2025-11-17 15:17:40,094 - sqlalchemy.engine.Engine - INFO - [no key 0.00104s] ()
+2025-11-17 15:17:40,099 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_username ON user (username)
+2025-11-17 15:17:40,101 - sqlalchemy.engine.Engine - INFO - [no key 0.00096s] ()
+2025-11-17 15:17:40,107 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE pokedexentry (
+	id INTEGER NOT NULL, 
+	owner_id INTEGER NOT NULL, 
+	pokemon_id INTEGER NOT NULL, 
+	pokemon_name VARCHAR NOT NULL, 
+	pokemon_sprite VARCHAR NOT NULL, 
+	is_captured BOOLEAN NOT NULL, 
+	capture_date DATETIME, 
+	nickname VARCHAR(50), 
+	notes VARCHAR(500), 
+	favorite BOOLEAN NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(owner_id) REFERENCES user (id)
+)
+
+
+2025-11-17 15:17:40,108 - sqlalchemy.engine.Engine - INFO - [no key 0.00107s] ()
+2025-11-17 15:17:40,113 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_pokedexentry_pokemon_id ON pokedexentry (pokemon_id)
+2025-11-17 15:17:40,114 - sqlalchemy.engine.Engine - INFO - [no key 0.00080s] ()
+2025-11-17 15:17:40,121 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE team (
+	id INTEGER NOT NULL, 
+	trainer_id INTEGER NOT NULL, 
+	name VARCHAR(100) NOT NULL, 
+	description VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(trainer_id) REFERENCES user (id)
+)
+
+
+2025-11-17 15:17:40,122 - sqlalchemy.engine.Engine - INFO - [no key 0.00096s] ()
+2025-11-17 15:17:40,129 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE teammember (
+	id INTEGER NOT NULL, 
+	team_id INTEGER NOT NULL, 
+	pokedex_entry_id INTEGER NOT NULL, 
+	position INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(team_id) REFERENCES team (id), 
+	FOREIGN KEY(pokedex_entry_id) REFERENCES pokedexentry (id)
+)
+
+
+2025-11-17 15:17:40,130 - sqlalchemy.engine.Engine - INFO - [no key 0.00088s] ()
+2025-11-17 15:17:40,134 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 15:17:40,136 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 15:17:55,400 - pokedex_api - INFO - Request: GET /
+2025-11-17 15:17:55,401 - pokedex_api - INFO - Response: 404 | Duration: 0.001s
+2025-11-17 15:17:57,071 - pokedex_api - INFO - Request: GET /favicon.ico
+2025-11-17 15:17:57,072 - pokedex_api - INFO - Response: 404 | Duration: 0.001s
+2025-11-17 15:18:00,029 - pokedex_api - INFO - Request: GET /docs
+2025-11-17 15:18:00,030 - pokedex_api - INFO - Response: 200 | Duration: 0.001s
+2025-11-17 15:18:00,262 - pokedex_api - INFO - Request: GET /openapi.json
+2025-11-17 15:18:00,421 - pokedex_api - INFO - Response: 200 | Duration: 0.159s
+2025-11-17 15:20:54,963 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 15:20:54,964 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 15:20:54,965 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:20:54,967 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 15:20:54,967 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:20:54,968 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 15:20:54,969 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:20:54,970 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 15:20:54,971 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 15:20:54,971 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 15:20:54,972 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 15:40:30,421 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:30,687 - pokedex_api - INFO - Response: 201 | Duration: 0.267s
+2025-11-17 15:40:30,689 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:40:30,693 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:30,930 - pokedex_api - INFO - Response: 201 | Duration: 0.237s
+2025-11-17 15:40:30,932 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:40:30,934 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:30,937 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:30,937 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:40:30,938 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:30,942 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:30,944 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:30,945 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:40:30,946 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:30,949 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:30,951 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:40:31,656 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:31,659 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=noexiste&password=mala'}]
+2025-11-17 15:40:32,061 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 15:40:32,062 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 15:40:32,064 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 15:40:32,069 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:32,075 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:40:32,076 - pokedex_api - INFO - Response: 400 | Duration: 0.007s
+2025-11-17 15:40:32,078 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:40:32,082 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:40:32,084 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:40:32,461 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 15:40:32,938 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 15:40:32,941 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.480s
+2025-11-17 15:40:32,946 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 15:40:34,428 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 15:40:34,429 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=1.484s
+2025-11-17 15:40:34,429 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 15:40:34,433 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,436 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,436 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,437 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:40:34,438 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:34,465 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,467 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,468 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,468 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:40:34,469 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:34,495 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,497 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,497 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,497 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:40:34,499 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:34,522 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,524 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,524 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,524 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:40:34,525 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:34,549 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,552 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,553 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,553 - pokedex_api - INFO - Response: 429 | Duration: 0.005s
+2025-11-17 15:40:34,554 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:40:34,577 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:40:34,579 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:40:34,579 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:40:34,579 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:40:34,581 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:25,744 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:26,010 - pokedex_api - INFO - Response: 201 | Duration: 0.266s
+2025-11-17 15:49:26,012 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:49:26,015 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:26,249 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 15:49:26,251 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:49:26,252 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:26,255 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:49:26,256 - pokedex_api - INFO - Response: 400 | Duration: 0.004s
+2025-11-17 15:49:26,257 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:49:26,261 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:26,262 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:49:26,264 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:49:26,265 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:49:26,267 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:26,540 - pokedex_api - INFO - Response: 200 | Duration: 0.273s
+2025-11-17 15:49:26,542 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:26,546 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:26,548 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 15:49:26,549 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 15:49:26,550 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 15:49:26,554 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 15:49:26,555 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 15:49:26,556 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 15:49:26,561 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:26,565 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:49:26,565 - pokedex_api - INFO - Response: 400 | Duration: 0.004s
+2025-11-17 15:49:26,566 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:49:26,569 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:26,796 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 15:49:26,798 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:26,800 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:27,028 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 15:49:27,030 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:27,032 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:27,271 - pokedex_api - INFO - Response: 200 | Duration: 0.240s
+2025-11-17 15:49:27,273 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:27,275 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:27,504 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 15:49:27,505 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:27,507 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:27,744 - pokedex_api - INFO - Response: 200 | Duration: 0.237s
+2025-11-17 15:49:27,745 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:27,747 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:27,975 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 15:49:27,977 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:27,979 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,226 - pokedex_api - INFO - Response: 200 | Duration: 0.247s
+2025-11-17 15:49:28,228 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:28,230 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,465 - pokedex_api - INFO - Response: 200 | Duration: 0.235s
+2025-11-17 15:49:28,466 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:49:28,468 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,469 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:49:28,470 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:49:28,470 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:49:28,471 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:28,472 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,474 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:49:28,475 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:49:28,475 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:49:28,476 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:28,477 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,478 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:49:28,479 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:49:28,479 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:49:28,480 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:28,484 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 15:49:28,770 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 15:49:28,775 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.291s
+2025-11-17 15:49:28,780 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 15:49:28,913 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 15:49:28,915 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.134s
+2025-11-17 15:49:28,915 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 15:49:28,920 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:28,922 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:28,923 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:28,923 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:49:28,924 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:28,926 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:28,927 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:49:29,498 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:29,500 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:29,500 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:29,500 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:49:29,501 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:29,504 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:29,505 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:49:29,846 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:29,847 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:29,848 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:29,848 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:49:29,849 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:29,851 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:29,852 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:49:30,181 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:30,183 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:30,183 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:30,184 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:49:30,185 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:30,187 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:30,188 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:49:30,526 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:30,527 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:30,528 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:30,528 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:49:30,529 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:30,531 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:30,532 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:49:30,861 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:49:30,862 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:49:30,862 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:49:30,864 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:49:30,865 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:49:30,866 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:49:30,868 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=testuser&password=testpassword'}]
+2025-11-17 15:55:54,268 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:54,535 - pokedex_api - INFO - Response: 201 | Duration: 0.267s
+2025-11-17 15:55:54,537 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:55:54,541 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:54,775 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 15:55:54,777 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 15:55:54,779 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:54,781 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:55:54,782 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 15:55:54,783 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:55:54,786 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:54,789 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:55:54,790 - pokedex_api - INFO - Response: 400 | Duration: 0.004s
+2025-11-17 15:55:54,791 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:55:54,793 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,027 - pokedex_api - INFO - Response: 200 | Duration: 0.234s
+2025-11-17 15:55:55,028 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:55,032 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,034 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 15:55:55,035 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 15:55:55,036 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 15:55:55,043 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 15:55:55,044 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 15:55:55,045 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 15:55:55,049 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:55,052 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 15:55:55,053 - pokedex_api - INFO - Response: 400 | Duration: 0.004s
+2025-11-17 15:55:55,054 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 15:55:55,058 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,285 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 15:55:55,287 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:55,289 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,517 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 15:55:55,519 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:55,520 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,749 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 15:55:55,751 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:55,752 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:55,982 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 15:55:55,984 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:55,986 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,217 - pokedex_api - INFO - Response: 200 | Duration: 0.231s
+2025-11-17 15:55:56,219 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:56,221 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,451 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 15:55:56,453 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:56,455 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,686 - pokedex_api - INFO - Response: 200 | Duration: 0.232s
+2025-11-17 15:55:56,688 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:56,690 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,922 - pokedex_api - INFO - Response: 200 | Duration: 0.231s
+2025-11-17 15:55:56,924 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 15:55:56,925 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,927 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:56,927 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:56,928 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:56,929 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:56,930 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,932 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:56,932 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:56,932 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:56,933 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:56,935 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:56,936 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:56,937 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:56,937 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:56,938 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:56,941 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 15:55:57,203 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 15:55:57,207 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.266s
+2025-11-17 15:55:57,212 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 15:55:57,351 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 15:55:57,351 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.139s
+2025-11-17 15:55:57,352 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 15:55:57,356 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,359 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,359 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,360 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:55:57,361 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,363 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,365 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,365 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,366 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:57,367 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,619 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,621 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,621 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,622 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:57,623 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,625 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,627 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,627 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,627 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:57,629 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,651 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,652 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,653 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,653 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:57,655 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,657 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,659 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,659 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,660 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:57,661 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,682 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,684 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,684 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,685 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:57,686 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,688 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,690 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,691 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,692 - pokedex_api - INFO - Response: 429 | Duration: 0.004s
+2025-11-17 15:55:57,693 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,713 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,715 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,715 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,716 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:57,717 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,719 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,720 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,721 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,721 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:57,722 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,744 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 15:55:57,746 - slowapi - WARNING - ratelimit 5 per 1 hour (testclient) exceeded at endpoint: /api/v1/auth/register
+2025-11-17 15:55:57,746 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/register desde testclient
+2025-11-17 15:55:57,747 - pokedex_api - INFO - Response: 429 | Duration: 0.003s
+2025-11-17 15:55:57,748 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 429 Too Many Requests"
+2025-11-17 15:55:57,750 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 15:55:57,751 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 15:55:57,752 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 15:55:57,752 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 15:55:57,753 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 16:17:38,930 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 16:17:38,930 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 16:17:38,931 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:17:38,931 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 16:17:38,931 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:17:38,932 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 16:17:38,932 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:17:38,932 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 16:17:38,933 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:17:38,933 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 16:17:38,934 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 16:17:38,935 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:17:39,201 - pokedex_api - INFO - Response: 201 | Duration: 0.266s
+2025-11-17 16:17:39,202 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 16:17:39,205 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:17:39,439 - pokedex_api - INFO - Response: 201 | Duration: 0.235s
+2025-11-17 16:17:39,440 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 16:17:39,440 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:17:39,442 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 16:17:39,443 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 16:17:39,443 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 16:17:39,446 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:17:39,448 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 16:17:39,448 - pokedex_api - INFO - Response: 400 | Duration: 0.002s
+2025-11-17 16:17:39,449 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 16:17:39,450 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:39,696 - pokedex_api - INFO - Response: 200 | Duration: 0.245s
+2025-11-17 16:17:39,697 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:39,699 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:39,701 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 16:17:39,702 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 16:17:39,702 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 16:17:39,705 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 16:17:39,706 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 16:17:39,706 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 16:17:39,709 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:39,938 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 16:17:39,939 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:39,939 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:40,168 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 16:17:40,169 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:40,170 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:40,398 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 16:17:40,399 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:40,400 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:40,632 - pokedex_api - INFO - Response: 200 | Duration: 0.232s
+2025-11-17 16:17:40,633 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:40,634 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:40,862 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 16:17:40,863 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:40,864 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,093 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 16:17:41,094 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:41,094 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,323 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 16:17:41,324 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:41,325 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,553 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 16:17:41,554 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:17:41,555 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,557 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 16:17:41,557 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 16:17:41,557 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 16:17:41,558 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 16:17:41,558 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,560 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 16:17:41,560 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 16:17:41,560 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 16:17:41,561 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 16:17:41,562 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:41,563 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 16:17:41,563 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 16:17:41,563 - pokedex_api - INFO - Response: 429 | Duration: 0.001s
+2025-11-17 16:17:41,564 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 16:17:41,567 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 16:17:41,880 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 16:17:41,882 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.315s
+2025-11-17 16:17:41,888 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 16:17:42,036 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 16:17:42,037 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.149s
+2025-11-17 16:17:42,037 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 16:17:42,041 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:17:42,042 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 16:17:42,042 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde testclient
+2025-11-17 16:17:42,043 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 16:17:42,043 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 16:46:14,723 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 16:46:14,725 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 16:46:14,725 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:46:14,727 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 16:46:14,727 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:46:14,728 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 16:46:14,728 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:46:14,729 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 16:46:14,730 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 16:46:14,731 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 16:46:14,731 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 16:46:14,735 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:46:15,051 - pokedex_api - INFO - Response: 201 | Duration: 0.315s
+2025-11-17 16:46:15,052 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 16:46:15,055 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:46:15,365 - pokedex_api - INFO - Response: 201 | Duration: 0.309s
+2025-11-17 16:46:15,384 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 16:46:15,394 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:46:15,437 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 16:46:15,441 - pokedex_api - INFO - Response: 400 | Duration: 0.049s
+2025-11-17 16:46:15,443 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 16:46:15,455 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 16:46:15,475 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 16:46:15,478 - pokedex_api - INFO - Response: 400 | Duration: 0.023s
+2025-11-17 16:46:15,480 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 16:46:15,488 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:15,799 - pokedex_api - INFO - Response: 200 | Duration: 0.312s
+2025-11-17 16:46:15,801 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:15,806 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:15,810 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 16:46:15,812 - pokedex_api - INFO - Response: 401 | Duration: 0.006s
+2025-11-17 16:46:15,813 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 16:46:15,822 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 16:46:15,826 - pokedex_api - INFO - Response: 403 | Duration: 0.004s
+2025-11-17 16:46:15,828 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 16:46:15,838 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:16,114 - pokedex_api - INFO - Response: 200 | Duration: 0.276s
+2025-11-17 16:46:16,115 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:16,116 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:16,368 - pokedex_api - INFO - Response: 200 | Duration: 0.252s
+2025-11-17 16:46:16,369 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:16,370 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:16,632 - pokedex_api - INFO - Response: 200 | Duration: 0.263s
+2025-11-17 16:46:16,633 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:16,634 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:16,895 - pokedex_api - INFO - Response: 200 | Duration: 0.260s
+2025-11-17 16:46:16,896 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:16,897 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:17,147 - pokedex_api - INFO - Response: 200 | Duration: 0.250s
+2025-11-17 16:46:17,148 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:17,148 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:17,391 - pokedex_api - INFO - Response: 200 | Duration: 0.243s
+2025-11-17 16:46:17,392 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:17,393 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:17,643 - pokedex_api - INFO - Response: 200 | Duration: 0.251s
+2025-11-17 16:46:17,644 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:17,645 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:17,908 - pokedex_api - INFO - Response: 200 | Duration: 0.263s
+2025-11-17 16:46:17,909 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 16:46:17,910 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:17,912 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 16:46:18,670 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 16:46:18,982 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 16:46:18,984 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.313s
+2025-11-17 16:46:18,990 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 16:46:19,112 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 16:46:19,114 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.124s
+2025-11-17 16:46:19,114 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 16:46:19,119 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 16:46:19,121 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:05:01,172 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 17:05:01,172 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 17:05:01,172 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:05:01,173 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 17:05:01,173 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:05:01,174 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 17:05:01,174 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:05:01,174 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 17:05:01,175 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:05:01,175 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 17:05:01,175 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 17:05:01,177 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:05:01,443 - pokedex_api - INFO - Response: 201 | Duration: 0.266s
+2025-11-17 17:05:01,444 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:05:01,446 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:05:01,683 - pokedex_api - INFO - Response: 201 | Duration: 0.237s
+2025-11-17 17:05:01,684 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:05:01,685 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:05:01,687 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:05:01,687 - pokedex_api - INFO - Response: 400 | Duration: 0.002s
+2025-11-17 17:05:01,688 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:05:01,690 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:05:01,692 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:05:01,692 - pokedex_api - INFO - Response: 400 | Duration: 0.002s
+2025-11-17 17:05:01,693 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:05:01,694 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:01,928 - pokedex_api - INFO - Response: 200 | Duration: 0.234s
+2025-11-17 17:05:01,929 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:01,931 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:01,933 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 17:05:01,934 - pokedex_api - INFO - Response: 401 | Duration: 0.002s
+2025-11-17 17:05:01,934 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 17:05:01,936 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:05:01,937 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 17:05:01,938 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 17:05:01,943 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:02,171 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:05:02,172 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:02,173 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:02,401 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:05:02,402 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:02,402 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:02,631 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 17:05:02,632 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:02,633 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:02,863 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 17:05:02,864 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:02,865 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:03,098 - pokedex_api - INFO - Response: 200 | Duration: 0.233s
+2025-11-17 17:05:03,099 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:03,100 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:03,331 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 17:05:03,332 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:03,332 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:03,569 - pokedex_api - INFO - Response: 200 | Duration: 0.237s
+2025-11-17 17:05:03,570 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:03,571 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:03,805 - pokedex_api - INFO - Response: 200 | Duration: 0.234s
+2025-11-17 17:05:03,805 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:05:03,807 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:03,808 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:05:04,546 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 17:05:04,793 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 17:05:04,798 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.252s
+2025-11-17 17:05:04,803 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 17:05:04,912 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 17:05:04,914 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.111s
+2025-11-17 17:05:04,915 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 17:05:04,918 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:05:04,919 - slowapi - WARNING - ratelimit 10 per 1 minute (testclient) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:12:17,731 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 17:12:17,731 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 17:12:17,731 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:12:17,732 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 17:12:17,732 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:12:17,732 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 17:12:17,733 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:12:17,733 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 17:12:17,733 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:12:17,734 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 17:12:17,734 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 17:12:17,736 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:12:18,003 - pokedex_api - INFO - Response: 201 | Duration: 0.266s
+2025-11-17 17:12:18,004 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:12:18,006 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:12:18,240 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 17:12:18,241 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:12:18,242 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:12:18,244 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:12:18,245 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:12:18,245 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:12:18,247 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:12:18,249 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:12:18,250 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:12:18,251 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:12:18,252 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:18,485 - pokedex_api - INFO - Response: 200 | Duration: 0.233s
+2025-11-17 17:12:18,486 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:18,488 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:18,490 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 17:12:18,491 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 17:12:18,491 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 17:12:18,494 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:12:18,495 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 17:12:18,495 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 17:12:18,499 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:18,727 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:12:18,728 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:18,729 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:18,957 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:12:18,958 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:18,958 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:19,186 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:12:19,186 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:19,187 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:19,415 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 17:12:19,416 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:19,418 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:19,675 - pokedex_api - INFO - Response: 200 | Duration: 0.257s
+2025-11-17 17:12:19,676 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:19,677 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:19,911 - pokedex_api - INFO - Response: 200 | Duration: 0.234s
+2025-11-17 17:12:19,912 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:19,913 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:20,140 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 17:12:20,141 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:20,142 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:20,370 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:12:20,371 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:20,372 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:20,599 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 17:12:20,600 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:20,601 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:20,828 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 17:12:20,829 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:20,830 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:20,831 - slowapi - WARNING - ratelimit 10 per 1 minute (rate-limit-test) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:12:20,832 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde rate-limit-test
+2025-11-17 17:12:20,832 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 17:12:20,832 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 17:12:20,835 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 17:12:21,157 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 17:12:21,158 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.323s
+2025-11-17 17:12:21,164 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 17:12:21,332 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 17:12:21,333 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.169s
+2025-11-17 17:12:21,333 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 17:12:21,336 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:21,565 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 17:12:21,566 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:12:21,568 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:21,572 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/25
+2025-11-17 17:12:21,741 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/25 "HTTP/1.1 200 OK"
+2025-11-17 17:12:21,743 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/25 status=200 duration=0.171s
+2025-11-17 17:12:21,754 - pokedex_api - INFO - Response: 201 | Duration: 0.186s
+2025-11-17 17:12:21,755 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:21,757 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:21,760 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/1
+2025-11-17 17:12:21,939 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/1 "HTTP/1.1 200 OK"
+2025-11-17 17:12:21,940 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/1 status=200 duration=0.180s
+2025-11-17 17:12:21,949 - pokedex_api - INFO - Response: 201 | Duration: 0.192s
+2025-11-17 17:12:21,950 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:21,950 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:21,953 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/1
+2025-11-17 17:12:22,128 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/1 "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,129 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/1 status=200 duration=0.176s
+2025-11-17 17:12:22,138 - pokedex_api - INFO - Response: 201 | Duration: 0.188s
+2025-11-17 17:12:22,138 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:22,374 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:22,377 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/10
+2025-11-17 17:12:22,559 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/10 "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,560 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/10 status=200 duration=0.183s
+2025-11-17 17:12:22,565 - pokedex_api - INFO - Response: 201 | Duration: 0.191s
+2025-11-17 17:12:22,566 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:22,567 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:22,570 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/11
+2025-11-17 17:12:22,740 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/11 "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,741 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/11 status=200 duration=0.171s
+2025-11-17 17:12:22,747 - pokedex_api - INFO - Response: 201 | Duration: 0.180s
+2025-11-17 17:12:22,748 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:22,749 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:12:22,754 - pokedex_api - INFO - Response: 200 | Duration: 0.005s
+2025-11-17 17:12:22,755 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex?captured=true "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,758 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:22,760 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/50
+2025-11-17 17:12:22,911 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/50 "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,913 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/50 status=200 duration=0.153s
+2025-11-17 17:12:22,921 - pokedex_api - INFO - Response: 201 | Duration: 0.163s
+2025-11-17 17:12:22,922 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:22,923 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/6
+2025-11-17 17:12:22,932 - pokedex_api - INFO - Response: 200 | Duration: 0.009s
+2025-11-17 17:12:22,933 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/6 "HTTP/1.1 200 OK"
+2025-11-17 17:12:22,950 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:12:22,953 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/99
+2025-11-17 17:12:23,078 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/99 "HTTP/1.1 200 OK"
+2025-11-17 17:12:23,082 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/99 status=200 duration=0.129s
+2025-11-17 17:12:23,092 - pokedex_api - INFO - Response: 201 | Duration: 0.142s
+2025-11-17 17:12:23,093 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:12:23,094 - pokedex_api - INFO - Request: DELETE /api/v1/pokedex/7
+2025-11-17 17:12:23,100 - pokedex_api - INFO - Response: 204 | Duration: 0.006s
+2025-11-17 17:12:23,101 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/pokedex/7 "HTTP/1.1 204 No Content"
+2025-11-17 17:12:23,104 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:12:23,338 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 17:12:23,339 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:12:23,339 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:12:23,341 - pokedex_api - WARNING - Error de validación en POST /api/v1/auth/login -> [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=otheruser&password=otherpassword'}]
+2025-11-17 17:12:23,341 - pokedex_api - INFO - Response: 422 | Duration: 0.002s
+2025-11-17 17:12:23,341 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 422 Unprocessable Entity"
+2025-11-17 17:23:11,190 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 17:23:11,190 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 17:23:11,190 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:23:11,191 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 17:23:11,191 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:23:11,192 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 17:23:11,192 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:23:11,193 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 17:23:11,193 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:23:11,193 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 17:23:11,194 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 17:23:15,440 - pokedex_api - INFO - Request: GET /
+2025-11-17 17:23:15,442 - pokedex_api - INFO - Response: 404 | Duration: 0.002s
+2025-11-17 17:23:21,424 - pokedex_api - INFO - Request: GET /docs
+2025-11-17 17:23:21,425 - pokedex_api - INFO - Response: 200 | Duration: 0.001s
+2025-11-17 17:23:21,750 - pokedex_api - INFO - Request: GET /openapi.json
+2025-11-17 17:23:21,879 - pokedex_api - INFO - Response: 200 | Duration: 0.129s
+2025-11-17 17:34:44,660 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 17:34:44,660 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 17:34:44,660 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:34:44,661 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 17:34:44,661 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:34:44,661 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 17:34:44,662 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:34:44,662 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 17:34:44,662 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:34:44,663 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 17:34:44,663 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 17:34:44,665 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:34:44,929 - pokedex_api - INFO - Response: 201 | Duration: 0.264s
+2025-11-17 17:34:44,930 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:34:44,932 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:34:45,164 - pokedex_api - INFO - Response: 201 | Duration: 0.232s
+2025-11-17 17:34:45,165 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:34:45,166 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:34:45,168 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:34:45,169 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:34:45,169 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:34:45,171 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:34:45,173 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:34:45,174 - pokedex_api - INFO - Response: 400 | Duration: 0.002s
+2025-11-17 17:34:45,174 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:34:45,175 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:45,411 - pokedex_api - INFO - Response: 200 | Duration: 0.237s
+2025-11-17 17:34:45,412 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:45,415 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:45,417 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 17:34:45,417 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 17:34:45,418 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 17:34:45,421 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:34:45,422 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 17:34:45,423 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 17:34:45,427 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:45,654 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 17:34:45,655 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:45,656 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:45,884 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:34:45,884 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:45,885 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:46,113 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:34:46,114 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:46,115 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:46,342 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:34:46,343 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:46,344 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:46,577 - pokedex_api - INFO - Response: 200 | Duration: 0.233s
+2025-11-17 17:34:46,578 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:46,579 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:46,832 - pokedex_api - INFO - Response: 200 | Duration: 0.253s
+2025-11-17 17:34:46,833 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:46,834 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:47,081 - pokedex_api - INFO - Response: 200 | Duration: 0.247s
+2025-11-17 17:34:47,082 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:47,083 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:47,311 - pokedex_api - INFO - Response: 200 | Duration: 0.228s
+2025-11-17 17:34:47,312 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:47,313 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:47,540 - pokedex_api - INFO - Response: 200 | Duration: 0.227s
+2025-11-17 17:34:47,541 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:47,542 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:47,772 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 17:34:47,773 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:47,773 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:47,775 - slowapi - WARNING - ratelimit 10 per 1 minute (rate-limit-test) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:34:47,775 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde rate-limit-test
+2025-11-17 17:34:47,775 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 17:34:47,776 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 17:34:47,779 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 17:34:48,039 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 17:34:48,044 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.264s
+2025-11-17 17:34:48,049 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 17:34:48,154 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 17:34:48,154 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.105s
+2025-11-17 17:34:48,155 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 17:34:48,158 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:48,389 - pokedex_api - INFO - Response: 200 | Duration: 0.231s
+2025-11-17 17:34:48,390 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:48,391 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:48,395 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/25
+2025-11-17 17:34:48,523 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/25 "HTTP/1.1 200 OK"
+2025-11-17 17:34:48,536 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/25 status=200 duration=0.141s
+2025-11-17 17:34:48,547 - pokedex_api - INFO - Response: 201 | Duration: 0.156s
+2025-11-17 17:34:48,548 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:48,550 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:48,554 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/1
+2025-11-17 17:34:48,661 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/1 "HTTP/1.1 200 OK"
+2025-11-17 17:34:48,662 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/1 status=200 duration=0.108s
+2025-11-17 17:34:48,670 - pokedex_api - INFO - Response: 201 | Duration: 0.121s
+2025-11-17 17:34:48,671 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:48,672 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:48,675 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:34:48,675 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 400 Bad Request"
+2025-11-17 17:34:48,917 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:48,920 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/10
+2025-11-17 17:34:49,043 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/10 "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,044 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/10 status=200 duration=0.124s
+2025-11-17 17:34:49,052 - pokedex_api - INFO - Response: 201 | Duration: 0.135s
+2025-11-17 17:34:49,053 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:49,054 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:49,057 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/11
+2025-11-17 17:34:49,173 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/11 "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,174 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/11 status=200 duration=0.117s
+2025-11-17 17:34:49,181 - pokedex_api - INFO - Response: 201 | Duration: 0.127s
+2025-11-17 17:34:49,182 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:49,183 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:34:49,188 - pokedex_api - INFO - Response: 200 | Duration: 0.005s
+2025-11-17 17:34:49,189 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex?captured=true "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,191 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:49,194 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/50
+2025-11-17 17:34:49,294 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/50 "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,296 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/50 status=200 duration=0.102s
+2025-11-17 17:34:49,305 - pokedex_api - INFO - Response: 201 | Duration: 0.113s
+2025-11-17 17:34:49,305 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:49,306 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/5
+2025-11-17 17:34:49,316 - pokedex_api - INFO - Response: 200 | Duration: 0.010s
+2025-11-17 17:34:49,317 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/5 "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,320 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:49,323 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/99
+2025-11-17 17:34:49,431 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/99 "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,435 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/99 status=200 duration=0.112s
+2025-11-17 17:34:49,444 - pokedex_api - INFO - Response: 201 | Duration: 0.124s
+2025-11-17 17:34:49,446 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:49,446 - pokedex_api - INFO - Request: DELETE /api/v1/pokedex/6
+2025-11-17 17:34:49,455 - pokedex_api - INFO - Response: 204 | Duration: 0.009s
+2025-11-17 17:34:49,456 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/pokedex/6 "HTTP/1.1 204 No Content"
+2025-11-17 17:34:49,458 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:34:49,692 - pokedex_api - INFO - Response: 201 | Duration: 0.234s
+2025-11-17 17:34:49,693 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:34:49,694 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:34:49,932 - pokedex_api - INFO - Response: 200 | Duration: 0.238s
+2025-11-17 17:34:49,933 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:34:49,934 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:34:49,937 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/150
+2025-11-17 17:34:50,045 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/150 "HTTP/1.1 200 OK"
+2025-11-17 17:34:50,047 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/150 status=200 duration=0.110s
+2025-11-17 17:34:50,057 - pokedex_api - INFO - Response: 201 | Duration: 0.123s
+2025-11-17 17:34:50,057 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:34:50,058 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/6
+2025-11-17 17:34:50,062 - pokedex_api - INFO - Response: 404 | Duration: 0.004s
+2025-11-17 17:34:50,062 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/6 "HTTP/1.1 404 Not Found"
+2025-11-17 17:39:09,853 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 17:39:09,853 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 17:39:09,853 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:39:09,854 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 17:39:09,854 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:39:09,855 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 17:39:09,855 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:39:09,855 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 17:39:09,856 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 17:39:09,856 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 17:39:09,856 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 17:39:09,858 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:39:10,125 - pokedex_api - INFO - Response: 201 | Duration: 0.267s
+2025-11-17 17:39:10,126 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:39:10,129 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:39:10,363 - pokedex_api - INFO - Response: 201 | Duration: 0.233s
+2025-11-17 17:39:10,363 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:39:10,364 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:39:10,366 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:39:10,367 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:39:10,367 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:39:10,369 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:39:10,371 - pokedex_api - WARNING - Register conflict: username='testuser', email='test@example.com'
+2025-11-17 17:39:10,372 - pokedex_api - INFO - Response: 400 | Duration: 0.003s
+2025-11-17 17:39:10,372 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 400 Bad Request"
+2025-11-17 17:39:10,373 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:10,607 - pokedex_api - INFO - Response: 200 | Duration: 0.234s
+2025-11-17 17:39:10,608 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:10,610 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:10,612 - pokedex_api - WARNING - Auth failed for username='noexiste'
+2025-11-17 17:39:10,613 - pokedex_api - INFO - Response: 401 | Duration: 0.003s
+2025-11-17 17:39:10,613 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 401 Unauthorized"
+2025-11-17 17:39:10,615 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:39:10,617 - pokedex_api - INFO - Response: 403 | Duration: 0.001s
+2025-11-17 17:39:10,617 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex "HTTP/1.1 403 Forbidden"
+2025-11-17 17:39:10,621 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:10,854 - pokedex_api - INFO - Response: 200 | Duration: 0.233s
+2025-11-17 17:39:10,855 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:10,856 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:11,087 - pokedex_api - INFO - Response: 200 | Duration: 0.231s
+2025-11-17 17:39:11,089 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:11,092 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:11,335 - pokedex_api - INFO - Response: 200 | Duration: 0.242s
+2025-11-17 17:39:11,336 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:11,337 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:11,696 - pokedex_api - INFO - Response: 200 | Duration: 0.360s
+2025-11-17 17:39:11,698 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:11,700 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:11,956 - pokedex_api - INFO - Response: 200 | Duration: 0.257s
+2025-11-17 17:39:11,957 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:11,958 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:12,198 - pokedex_api - INFO - Response: 200 | Duration: 0.240s
+2025-11-17 17:39:12,200 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:12,201 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:12,436 - pokedex_api - INFO - Response: 200 | Duration: 0.235s
+2025-11-17 17:39:12,437 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:12,439 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:12,669 - pokedex_api - INFO - Response: 200 | Duration: 0.230s
+2025-11-17 17:39:12,672 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:12,674 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:12,940 - pokedex_api - INFO - Response: 200 | Duration: 0.266s
+2025-11-17 17:39:12,941 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:12,942 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:13,170 - pokedex_api - INFO - Response: 200 | Duration: 0.229s
+2025-11-17 17:39:13,171 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:13,172 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:13,173 - slowapi - WARNING - ratelimit 10 per 1 minute (rate-limit-test) exceeded at endpoint: /api/v1/auth/login
+2025-11-17 17:39:13,174 - pokedex_api - WARNING - Rate limit exceeded para POST /api/v1/auth/login desde rate-limit-test
+2025-11-17 17:39:13,174 - pokedex_api - INFO - Response: 429 | Duration: 0.002s
+2025-11-17 17:39:13,175 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 429 Too Many Requests"
+2025-11-17 17:39:13,178 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/pikachu
+2025-11-17 17:39:13,370 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/pikachu "HTTP/1.1 200 OK"
+2025-11-17 17:39:13,371 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/pikachu status=200 duration=0.193s
+2025-11-17 17:39:13,377 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123
+2025-11-17 17:39:13,482 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 "HTTP/1.1 404 Not Found"
+2025-11-17 17:39:13,484 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/esto_no_existe_123 status=404 duration=0.107s
+2025-11-17 17:39:13,485 - pokedex_api - WARNING - Pokémon no encontrado: esto_no_existe_123
+2025-11-17 17:39:13,489 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:13,724 - pokedex_api - INFO - Response: 200 | Duration: 0.235s
+2025-11-17 17:39:13,725 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:13,727 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:13,732 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/25
+2025-11-17 17:39:13,860 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/25 "HTTP/1.1 200 OK"
+2025-11-17 17:39:13,864 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/25 status=200 duration=0.132s
+2025-11-17 17:39:13,874 - pokedex_api - INFO - Response: 201 | Duration: 0.147s
+2025-11-17 17:39:13,874 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:13,877 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:13,880 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/1
+2025-11-17 17:39:13,981 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/1 "HTTP/1.1 200 OK"
+2025-11-17 17:39:13,983 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/1 status=200 duration=0.103s
+2025-11-17 17:39:13,995 - pokedex_api - INFO - Response: 201 | Duration: 0.118s
+2025-11-17 17:39:13,996 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:13,998 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:14,004 - pokedex_api - INFO - Response: 400 | Duration: 0.006s
+2025-11-17 17:39:14,004 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 400 Bad Request"
+2025-11-17 17:39:14,008 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:14,011 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/10
+2025-11-17 17:39:14,119 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/10 "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,120 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/10 status=200 duration=0.109s
+2025-11-17 17:39:14,129 - pokedex_api - INFO - Response: 201 | Duration: 0.120s
+2025-11-17 17:39:14,130 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:14,131 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:14,135 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/11
+2025-11-17 17:39:14,241 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/11 "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,243 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/11 status=200 duration=0.108s
+2025-11-17 17:39:14,252 - pokedex_api - INFO - Response: 201 | Duration: 0.121s
+2025-11-17 17:39:14,254 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:14,255 - pokedex_api - INFO - Request: GET /api/v1/pokedex
+2025-11-17 17:39:14,261 - pokedex_api - INFO - Response: 200 | Duration: 0.006s
+2025-11-17 17:39:14,262 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/pokedex?captured=true "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,266 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:14,272 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/50
+2025-11-17 17:39:14,393 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/50 "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,402 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/50 status=200 duration=0.130s
+2025-11-17 17:39:14,425 - pokedex_api - INFO - Response: 201 | Duration: 0.159s
+2025-11-17 17:39:14,431 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:14,437 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/5
+2025-11-17 17:39:14,483 - pokedex_api - INFO - Response: 200 | Duration: 0.047s
+2025-11-17 17:39:14,486 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/5 "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,496 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:14,506 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/99
+2025-11-17 17:39:14,658 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/99 "HTTP/1.1 200 OK"
+2025-11-17 17:39:14,662 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/99 status=200 duration=0.156s
+2025-11-17 17:39:14,679 - pokedex_api - INFO - Response: 201 | Duration: 0.184s
+2025-11-17 17:39:14,681 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:14,682 - pokedex_api - INFO - Request: DELETE /api/v1/pokedex/6
+2025-11-17 17:39:14,689 - pokedex_api - INFO - Response: 204 | Duration: 0.007s
+2025-11-17 17:39:14,690 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/pokedex/6 "HTTP/1.1 204 No Content"
+2025-11-17 17:39:14,693 - pokedex_api - INFO - Request: POST /api/v1/auth/register
+2025-11-17 17:39:14,954 - pokedex_api - INFO - Response: 201 | Duration: 0.261s
+2025-11-17 17:39:14,955 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/register "HTTP/1.1 201 Created"
+2025-11-17 17:39:14,956 - pokedex_api - INFO - Request: POST /api/v1/auth/login
+2025-11-17 17:39:15,188 - pokedex_api - INFO - Response: 200 | Duration: 0.232s
+2025-11-17 17:39:15,189 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/auth/login "HTTP/1.1 200 OK"
+2025-11-17 17:39:15,190 - pokedex_api - INFO - Request: POST /api/v1/pokedex
+2025-11-17 17:39:15,193 - pokedex_api - INFO - PokeAPI GET https://pokeapi.co/api/v2/pokemon/150
+2025-11-17 17:39:15,312 - httpx - INFO - HTTP Request: GET https://pokeapi.co/api/v2/pokemon/150 "HTTP/1.1 200 OK"
+2025-11-17 17:39:15,316 - pokedex_api - INFO - PokeAPI response https://pokeapi.co/api/v2/pokemon/150 status=200 duration=0.123s
+2025-11-17 17:39:15,325 - pokedex_api - INFO - Response: 201 | Duration: 0.135s
+2025-11-17 17:39:15,326 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/pokedex "HTTP/1.1 201 Created"
+2025-11-17 17:39:15,327 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/6
+2025-11-17 17:39:15,331 - pokedex_api - INFO - Response: 404 | Duration: 0.004s
+2025-11-17 17:39:15,332 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/6 "HTTP/1.1 404 Not Found"

@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 
 
 
@@ -46,7 +47,6 @@ async def lifespan(app: FastAPI):
     create_db_and_tables()
     logger.info("Base de datos inicializada")
     yield
-    # Aquí iría lógica de shutdown si la necesitas
 
 
 app = FastAPI(
@@ -70,7 +70,7 @@ app.add_middleware(
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_headers=["Authorization", "Content-Type", "X-RateLimit-Key"],
     max_age=3600,
 )
 
@@ -103,18 +103,21 @@ async def validation_exception_handler(request, exc: RequestValidationError):
     )
     return JSONResponse(
         status_code=422,
-        content={"detail": exc.errors()},
+        content={"detail": jsonable_encoder(exc.errors())},
     )
 
 #Manejo de Rate Limit Exceeded
 @app.exception_handler(RateLimitExceeded)
-async def rate_limit_handler(request, exc: RateLimitExceeded):
-    logger.warning(
-        "Rate limit exceeded para %s %s desde %s",
-        request.method,
-        request.url.path,
-        request.client.host if request.client else "unknown",
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    # Clave que identificará al cliente en el rate limiter
+    key = request.headers.get("X-RateLimit-Key") or (
+        request.client.host if request.client else "unknown"
     )
+
+    logger.warning(
+        f"Rate limit exceeded para {request.method} {request.url.path} desde {key}"
+    )
+
     return _rate_limit_exceeded_handler(request, exc)
 
 # Routers
