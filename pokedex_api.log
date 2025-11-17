@@ -1239,3 +1239,20 @@ CREATE TABLE teammember (
 2025-11-17 17:39:15,327 - pokedex_api - INFO - Request: PATCH /api/v1/pokedex/6
 2025-11-17 17:39:15,331 - pokedex_api - INFO - Response: 404 | Duration: 0.004s
 2025-11-17 17:39:15,332 - httpx - INFO - HTTP Request: PATCH http://testserver/api/v1/pokedex/6 "HTTP/1.1 404 Not Found"
+2025-11-17 18:02:30,729 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-11-17 18:02:30,729 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-11-17 18:02:30,730 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 18:02:30,731 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pokedexentry")
+2025-11-17 18:02:30,731 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 18:02:30,731 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("team")
+2025-11-17 18:02:30,731 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 18:02:30,732 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teammember")
+2025-11-17 18:02:30,732 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-11-17 18:02:30,733 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-11-17 18:02:30,733 - pokedex_api - INFO - Base de datos inicializada
+2025-11-17 18:02:32,797 - pokedex_api - INFO - Request: GET /
+2025-11-17 18:02:32,799 - pokedex_api - INFO - Response: 404 | Duration: 0.002s
+2025-11-17 18:02:37,748 - pokedex_api - INFO - Request: GET /docs
+2025-11-17 18:02:37,750 - pokedex_api - INFO - Response: 200 | Duration: 0.002s
+2025-11-17 18:02:37,993 - pokedex_api - INFO - Request: GET /openapi.json
+2025-11-17 18:02:38,082 - pokedex_api - INFO - Response: 200 | Duration: 0.089s
