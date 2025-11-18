@@ -13,5 +13,4 @@ def rate_limit_key(request: Request) -> str:
     return get_remote_address(request)
 
 
-
 limiter = Limiter(key_func=rate_limit_key)
